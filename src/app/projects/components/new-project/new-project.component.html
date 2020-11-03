@@ -1,0 +1,29 @@
+<mat-card class="new-project-card">
+  <mat-card-header>
+    <mat-card-title>
+      Add New Project
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-form #newProjectForm="ngForm">
+      <mat-form-field class="full-width">
+        <mat-label>Project Name</mat-label>
+        <input matInput placeholder="Ex. My Amazing Project" name="name" [(ngModel)]="name" required>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Ex. Project for my amazing things" name="description" [(ngModel)]="description" required></textarea>
+      </mat-form-field>
+
+      <mat-label id="select-project-label">Select a project VCS host</mat-label>
+      <mat-radio-group aria-label="Select a project VCS host" aria-labelledby="select-project-label" name="host" [(ngModel)]="host" class="project-host-group" required>
+        <mat-radio-button value="VSTS">VSTS</mat-radio-button>
+        <mat-radio-button value="Github">Github</mat-radio-button>
+      </mat-radio-group>
+    </ng-form>
+  </mat-card-content>
+  <mat-card-actions class="actions-area">
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </mat-card-actions>
+</mat-card>
