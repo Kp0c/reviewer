@@ -24,6 +24,9 @@ import { NewProjectComponent } from './projects/components/new-project/new-proje
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ProjectComponent } from './projects/components/project/project.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     NavigationComponent,
     LoginComponent,
     HomeComponent,
-    NewProjectComponent
+    NewProjectComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     FormsModule,
     MatRadioModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

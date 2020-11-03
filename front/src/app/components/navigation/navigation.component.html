@@ -5,6 +5,7 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Projects</mat-toolbar>
     <mat-nav-list>
+      <a mat-list-item *ngFor="let project of projects$ | async" [routerLink]="['projects', project.id]">{{project.name}}</a>
       <a mat-list-item routerLink="/projects/new">Add New Project</a>
     </mat-nav-list>
   </mat-sidenav>

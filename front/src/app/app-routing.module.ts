@@ -4,7 +4,7 @@ import { LoggedInGuard } from 'ngx-auth-firebaseui';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NewProjectComponent } from './projects/components/new-project/new-project.component';
-
+import { ProjectComponent } from './projects/components/project/project.component';
 
 const routes: Routes = [
   {
@@ -28,6 +28,10 @@ const routes: Routes = [
       {
         path: 'new',
         component: NewProjectComponent
+      },
+      {
+        path: ':id',
+        component: ProjectComponent
       }
     ]
   }

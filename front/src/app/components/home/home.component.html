@@ -3,7 +3,7 @@
   <mat-label *ngIf="(projects | async)?.length === 0">No projects added yet. Click on the "Add New Project" button at the toolbar menu</mat-label>
   <mat-grid-list cols="2" rowHeight="350px">
     <mat-grid-tile *ngFor="let project of projects | async">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" [routerLink]="['projects', project.id]">
         <mat-card-header>
           <mat-card-title>
             {{project.name}}

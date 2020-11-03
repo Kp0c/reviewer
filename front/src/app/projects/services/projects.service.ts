@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { from, Observable, of } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { Project } from '../models/project.model';
+import { UserNameMapping } from '../models/usernameMapping.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class ProjectsService {
 
               return {
                 ...data,
+                mappings: data.mappings ?? [],
                 id: doc.id
               } as Project;
             }));
@@ -43,5 +45,26 @@ export class ProjectsService {
         );
       })
     );
+  }
+
+  getProjectById(id: string): Observable<Project> {
+    return this.firestore.doc<Project>(`projects/${id}`).snapshotChanges().pipe(
+      map(action => {
+        const doc = action.payload;
+        const data = doc.data();
+
+        return {
+          ...data,
+          mappings: data.mappings ?? [],
+          id: doc.id
+        } as Project;
+      })
+    );
+  }
+
+  saveMappings(projectId: string, mappings: UserNameMapping[]): Promise<void> {
+    return this.firestore.doc<Project>(`projects/${projectId}`).update({
+      mappings
+    });
   }
 }
