@@ -27,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProjectComponent } from './projects/components/project/project.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatRadioModule,
     MatSnackBarModule,
     MatDividerModule,
-    ClipboardModule
+    ClipboardModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

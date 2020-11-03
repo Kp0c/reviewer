@@ -5,6 +5,7 @@ import { from, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Project } from '../models/project.model';
 import { UserNameMapping } from '../models/usernameMapping.model';
+import { PullRequest } from '../models/pullRequest.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +67,9 @@ export class ProjectsService {
     return this.firestore.doc<Project>(`projects/${projectId}`).update({
       mappings
     });
+  }
+
+  getPullRequests(projectId: string): Observable<PullRequest[]> {
+    return this.firestore.collection<PullRequest>(`projects/${projectId}/pull_requests`).valueChanges();
   }
 }

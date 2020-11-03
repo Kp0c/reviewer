@@ -62,7 +62,8 @@ const handlePullRequest = async (projectId: string, body: any): Promise<string> 
 
   await admin.firestore().collection(`projects/${projectId}/pull_requests`).add({
     id: pr.id,
-    creator
+    creator,
+    createdAt: pr.created_at
   });
 
   return `Create a new PR with id: ${pr.id}`;
