@@ -44,9 +44,25 @@ const handlePullRequest = async (projectId: string, body: any): Promise<string> 
   }
 
   const pr = body.pull_request;
+  const existingPr = await admin.firestore().collection(`projects/${projectId}/pull_requests`).where('id', '==', pr.id).get();
+  if (!existingPr.empty) {
+    return `PR ${pr.id} already exists in project ${projectId}`;
+  }
+
+  const project = await admin.firestore().doc(`projects/${projectId}`).get();
+  const projectData = project.data();
+
+  if (!projectData) {
+    return `Project ${projectId} does not exists`;
+  }
+
+  const mappings = projectData.mappings;
+  const creatorEmail = mappings.find((mapping: any) => mapping.githubName === pr.user.login)?.reviewerEmail;
+  const creator = creatorEmail ?? pr.user.login;
+
   await admin.firestore().collection(`projects/${projectId}/pull_requests`).add({
     id: pr.id,
-    creator: pr.user.login
+    creator
   });
 
   return `Create a new PR with id: ${pr.id}`;
