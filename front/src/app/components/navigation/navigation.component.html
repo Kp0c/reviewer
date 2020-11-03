@@ -23,7 +23,7 @@
         Reviewer
       </a>
       <span class="spacer"></span>
-      <ngx-auth-firebaseui-avatar [canDeleteAccount]="false" (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
+      <ngx-auth-firebaseui-avatar [canDeleteAccount]="false" [canEditAccount]="false" (onSignOut)="onSignOut()"></ngx-auth-firebaseui-avatar>
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>
