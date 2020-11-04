@@ -20,7 +20,8 @@ export class ProjectsService {
       switchMap(user => {
         return from(this.firestore.collection('projects').add({
           ...project,
-          owner: user.uid
+          owner: user.uid,
+          users: [user.uid]
         }));
       })
     ).toPromise();
@@ -30,7 +31,7 @@ export class ProjectsService {
     return this.afAuth.user.pipe(
       filter(user => !!user),
       switchMap(user => {
-        return this.firestore.collection<Project>(`projects`, ref => ref.where('owner', '==', user.uid)).snapshotChanges().pipe(
+        return this.firestore.collection<Project>(`projects`, ref => ref.where('users', 'array-contains', user.uid)).snapshotChanges().pipe(
           switchMap(actions => {
             return of(actions.map(action => {
               const doc = action.payload.doc;
@@ -39,6 +40,7 @@ export class ProjectsService {
               return {
                 ...data,
                 mappings: data.mappings ?? [],
+                users: data.users ?? [],
                 id: doc.id
               } as Project;
             }));
@@ -57,6 +59,7 @@ export class ProjectsService {
         return {
           ...data,
           mappings: data.mappings ?? [],
+          users: data.users ?? [],
           id: doc.id
         } as Project;
       })
@@ -66,6 +69,12 @@ export class ProjectsService {
   saveMappings(projectId: string, mappings: UserNameMapping[]): Promise<void> {
     return this.firestore.doc<Project>(`projects/${projectId}`).update({
       mappings
+    });
+  }
+
+  saveUsers(projectId: string, users: string[]): Promise<void> {
+    return this.firestore.doc<Project>(`projects/${projectId}`).update({
+      users
     });
   }
 

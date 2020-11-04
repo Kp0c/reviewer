@@ -5,5 +5,7 @@ export interface Project {
   name: string;
   description: string,
   host: string;
+  owner?: string;
   mappings?: UserNameMapping[];
+  users?: string[];
 }

@@ -1,0 +1,36 @@
+<mat-card class="project-card" *ngIf="project">
+  <mat-card-header>
+    <mat-card-title>
+      Edit Members of this project
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field class="full-width">
+      <mat-chip-list #chipList aria-label="User selection">
+        <mat-chip
+          *ngFor="let user of project.users"
+          [selectable]="false"
+          [removable]="true"
+          (removed)="remove(user)">
+          {{getUserTextById(user)}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Users"
+          #userInput
+          [formControl]="userCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let user of filteredUsers$ | async" [value]="user">
+          {{user.displayName}} ({{user.email}})
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="saveUsers()">Save Users</button>
+  </mat-card-actions>
+</mat-card>

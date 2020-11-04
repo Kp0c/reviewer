@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { NewProjectComponent } from './projects/components/new-project/new-project.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProjectComponent } from './projects/components/project/project.component';
@@ -35,6 +35,9 @@ import { ProjectInfoCardComponent } from './projects/components/project-info-car
 import { ProjectLeaderboardCardComponent } from './projects/components/project-leaderboard-card/project-leaderboard-card.component';
 import { ProjectStatCardComponent } from './projects/components/project-stat-card/project-stat-card.component';
 import { UserMappingsCardComponent } from './projects/components/user-mappings-card/user-mappings-card.component';
+import { ProjectUsersCardComponent } from './projects/components/project-users-card/project-users-card.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { UserMappingsCardComponent } from './projects/components/user-mappings-c
     ProjectInfoCardComponent,
     ProjectLeaderboardCardComponent,
     ProjectStatCardComponent,
-    UserMappingsCardComponent
+    UserMappingsCardComponent,
+    ProjectUsersCardComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +81,10 @@ import { UserMappingsCardComponent } from './projects/components/user-mappings-c
     ClipboardModule,
     MatTableModule,
     MatDialogModule,
-    MatTabsModule
+    MatTabsModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   providers: [],
   entryComponents: [
