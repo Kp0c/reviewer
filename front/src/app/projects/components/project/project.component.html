@@ -1,10 +1,10 @@
 <mat-tab-group>
   <mat-tab label="Project Info">
-    <app-project-info-card [project]="project"></app-project-info-card>
+    <app-project-info-card [project]="project" [user]="user"></app-project-info-card>
     <app-project-leaderboard-card [pullRequests]="pullRequests"></app-project-leaderboard-card>
     <app-project-stat-card [pullRequests]="pullRequests" [user]="user"></app-project-stat-card>
   </mat-tab>
-  <mat-tab label="User management">
+  <mat-tab label="User management" [disabled]="project?.owner !== user?.uid">
     <app-project-users-card [project]="project"></app-project-users-card>
     <app-user-mappings-card [project]="project"></app-user-mappings-card>
   </mat-tab>

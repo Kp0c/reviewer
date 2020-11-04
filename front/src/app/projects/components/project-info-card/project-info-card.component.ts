@@ -13,6 +13,7 @@ import { ProjectsService } from '../../services/projects.service';
 })
 export class ProjectInfoCardComponent implements OnInit {
   @Input() project: Project;
+  @Input() user: firebase.User;
 
   constructor(private dialog: MatDialog,
               private router: Router,
