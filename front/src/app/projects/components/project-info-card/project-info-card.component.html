@@ -1,0 +1,14 @@
+<mat-card class="project-card" *ngIf="project">
+  <mat-card-header>
+    <mat-card-title>
+      {{project.name}}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>{{project.description}}</div>
+  </mat-card-content>
+  <mat-card-actions class="actions-area">
+    <button mat-raised-button color="primary" [cdkCopyToClipboard]="getLinkForHook()">Copy Link for WebHook to the Clipboard</button>
+    <button mat-raised-button color="warn" (click)="deleteProject()">Delete this project</button>
+  </mat-card-actions>
+</mat-card>

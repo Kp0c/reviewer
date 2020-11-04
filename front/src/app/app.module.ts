@@ -28,6 +28,13 @@ import { ProjectComponent } from './projects/components/project/project.componen
 import { MatDividerModule } from '@angular/material/divider';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatTableModule } from '@angular/material/table';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ProjectInfoCardComponent } from './projects/components/project-info-card/project-info-card.component';
+import { ProjectLeaderboardCardComponent } from './projects/components/project-leaderboard-card/project-leaderboard-card.component';
+import { ProjectStatCardComponent } from './projects/components/project-stat-card/project-stat-card.component';
+import { UserMappingsCardComponent } from './projects/components/user-mappings-card/user-mappings-card.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +43,12 @@ import { MatTableModule } from '@angular/material/table';
     LoginComponent,
     HomeComponent,
     NewProjectComponent,
-    ProjectComponent
+    ProjectComponent,
+    ConfirmDialogComponent,
+    ProjectInfoCardComponent,
+    ProjectLeaderboardCardComponent,
+    ProjectStatCardComponent,
+    UserMappingsCardComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +75,14 @@ import { MatTableModule } from '@angular/material/table';
     MatSnackBarModule,
     MatDividerModule,
     ClipboardModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatTabsModule
   ],
   providers: [],
+  entryComponents: [
+    ConfirmDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

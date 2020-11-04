@@ -1,0 +1,22 @@
+<mat-card class="project-card" *ngIf="project">
+  <mat-card-header>
+    <mat-card-title>
+      Edit Users mappings
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="user-mappings">
+    <div *ngFor="let mapping of project.mappings">
+      <mat-form-field class="w40">
+        <input matInput placeholder="Reviewer system email" [(ngModel)]="mapping.reviewerEmail">
+      </mat-form-field>
+      <mat-form-field class="w40">
+        <input matInput placeholder="Github name" [(ngModel)]="mapping.githubName">
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="deleteMapping(mapping)">Remove mapping</button>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="actions-area">
+    <button mat-raised-button color="primary" (click)="addNewMapping()">Add new mapping</button>
+    <button mat-raised-button color="primary" (click)="saveMapping()">Save mappings</button>
+  </mat-card-actions>
+</mat-card>

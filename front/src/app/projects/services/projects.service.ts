@@ -72,4 +72,8 @@ export class ProjectsService {
   getPullRequests(projectId: string): Observable<PullRequest[]> {
     return this.firestore.collection<PullRequest>(`projects/${projectId}/pull_requests`).valueChanges();
   }
+
+  deleteProject(projectId: string): Promise<void> {
+    return this.firestore.doc(`projects/${projectId}`).delete();
+  }
 }

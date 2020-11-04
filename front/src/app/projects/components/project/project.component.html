@@ -1,64 +1,10 @@
-<mat-card class="project-card" *ngIf="project">
-  <mat-card-header>
-    <mat-card-title>
-      {{project.name}}
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div>{{project.description}}</div>
-  </mat-card-content>
-  <mat-card-actions class="actions-area">
-    <button mat-raised-button color="primary" [cdkCopyToClipboard]="getLinkForHook()">Copy Link for WebHook to the Clipboard</button>
-  </mat-card-actions>
-</mat-card>
-
-<mat-card class="project-card" *ngIf="project">
-  <mat-card-header>
-    <mat-card-title>
-      Edit Users mappings
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content class="user-mappings">
-    <div *ngFor="let mapping of project.mappings">
-      <mat-form-field class="w40">
-        <input matInput placeholder="Reviewer system email" [(ngModel)]="mapping.reviewerEmail">
-      </mat-form-field>
-      <mat-form-field class="w40">
-        <input matInput placeholder="Github name" [(ngModel)]="mapping.githubName">
-      </mat-form-field>
-      <button mat-raised-button color="warn" (click)="deleteMapping(mapping)">Remove mapping</button>
-    </div>
-  </mat-card-content>
-  <mat-card-actions class="actions-area">
-    <button mat-raised-button color="primary" (click)="addNewMapping()">Add new mapping</button>
-    <button mat-raised-button color="primary" (click)="saveMapping()">Save mappings</button>
-  </mat-card-actions>
-</mat-card>
-
-<mat-card class="project-card">
-  <mat-card-header>
-    <mat-card-title>
-      Project Leaderboard for this week
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <table mat-table [dataSource]="leaderboard" class="full-width">
-      <mat-text-column name="email"></mat-text-column>
-      <mat-text-column name="points"></mat-text-column>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class="project-card">
-  <mat-card-header>
-    <mat-card-title>
-      My lifetime stats in this project
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    Pull Requests created: {{pullRequestsCreated}}
-  </mat-card-content>
-</mat-card>
+<mat-tab-group>
+  <mat-tab label="Project Info">
+    <app-project-info-card [project]="project"></app-project-info-card>
+    <app-project-leaderboard-card [pullRequests]="pullRequests"></app-project-leaderboard-card>
+    <app-project-stat-card [pullRequests]="pullRequests" [user]="user"></app-project-stat-card>
+  </mat-tab>
+  <mat-tab label="User management">
+    <app-user-mappings-card [project]="project"></app-user-mappings-card>
+  </mat-tab>
+</mat-tab-group>

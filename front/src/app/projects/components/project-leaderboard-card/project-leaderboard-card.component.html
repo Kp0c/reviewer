@@ -1,0 +1,16 @@
+<mat-card class="project-card">
+  <mat-card-header>
+    <mat-card-title>
+      Project Leaderboard for this week
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="leaderboard" class="full-width">
+      <mat-text-column name="email"></mat-text-column>
+      <mat-text-column name="points"></mat-text-column>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
