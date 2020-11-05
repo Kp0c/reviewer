@@ -20,7 +20,7 @@ export class ProjectInfoCardComponent implements OnInit {
               private projectsService: ProjectsService,
               private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   getLinkForHook(): string {
