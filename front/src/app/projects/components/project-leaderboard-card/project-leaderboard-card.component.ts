@@ -12,7 +12,7 @@ export class ProjectLeaderboardCardComponent implements OnInit {
   leaderboard: LeaderboardItem[] = [];
 
   pointsPerComment = 1;
-  pointsPerCreatedRequest = 5;
+  pointsPerCreatedRequest = 10;
   pointsPerReview = 5;
 
   @Input() set pullRequests(prs: PullRequest[]) {
