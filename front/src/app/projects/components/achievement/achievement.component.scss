@@ -1,0 +1,23 @@
+.achievements-icons {
+  display: flex;
+  margin-bottom: 5px;
+
+  img {
+    transform: scale(0.8, 0.8);
+  }
+}
+
+.achievements-labels {
+  display: flex;
+}
+
+.achievement-current-badge {
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.current-value {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}

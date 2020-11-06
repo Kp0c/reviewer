@@ -1,0 +1,17 @@
+<div class="current-value">
+  <img class="achievement-current-badge" [src]="getCurrentIconSrc()"/>
+  <b>{{name}} ({{ currentValue }})</b>
+</div>
+<div *ngIf="!isMaxLevel()">
+  <div class="achievements-icons">
+    <img [src]="getCurrentIconSrc()"/>
+    <div class="spacer"></div>
+    <img [src]="getNextIconSrc()"/>
+  </div>
+  <mat-progress-bar mode="determinate" [value]="getCurrentPercentage()"></mat-progress-bar>
+  <div class="achievements-labels">
+    {{getCurrentMinValue()}}
+    <div class="spacer"></div>
+    {{getCurrentMaxValue()}}
+  </div>
+</div>

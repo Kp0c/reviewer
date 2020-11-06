@@ -38,6 +38,8 @@ import { UserMappingsCardComponent } from './projects/components/user-mappings-c
 import { ProjectUsersCardComponent } from './projects/components/project-users-card/project-users-card.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AchievementComponent } from './projects/components/achievement/achievement.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ProjectLeaderboardCardComponent,
     ProjectStatCardComponent,
     UserMappingsCardComponent,
-    ProjectUsersCardComponent
+    ProjectUsersCardComponent,
+    AchievementComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatTabsModule,
     MatChipsModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressBarModule
   ],
   providers: [],
   entryComponents: [

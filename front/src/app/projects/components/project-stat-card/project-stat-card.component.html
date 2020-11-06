@@ -1,7 +1,7 @@
 <mat-card class="project-card">
   <mat-card-header>
     <mat-card-title>
-      My lifetime stats in this project
+      My lifetime stats
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -10,5 +10,25 @@
       <li>Reviews made: {{reviewsMade}}</li>
       <li>Comments left: {{commentsLeft}}</li>
     </ul>
+  </mat-card-content>
+</mat-card>
+<mat-card class="project-card">
+  <mat-card-header>
+    <mat-card-title>
+      My achievements
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-achievement name="Pull requests created"
+                     imagesSrc="/assets/images/blue-gem"
+                     [currentValue]="pullRequestsCreated"></app-achievement>
+    <mat-divider></mat-divider>
+    <app-achievement name="Reviews made"
+                    imagesSrc="/assets/images/green-gem"
+                    [currentValue]="reviewsMade"></app-achievement>
+    <mat-divider></mat-divider>
+    <app-achievement name="Comments left"
+                      imagesSrc="/assets/images/violet-gem"
+                      [currentValue]="commentsLeft"></app-achievement>
   </mat-card-content>
 </mat-card>
