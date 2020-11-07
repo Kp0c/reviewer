@@ -10,6 +10,90 @@ admin.initializeApp();
 //   response.send("Hello from Firebase!");
 // });
 
+export const vstsHook = functions.https.onRequest(async (request, response) => {
+  const projectId = request.query.projectId as string;
+
+  if (!projectId) {
+    response.send("Unable to read project id");
+    return;
+  }
+
+  const body = request.body;
+  const event = body.eventType;
+
+  let handler = null;
+  switch (event) {
+    case 'git.pullrequest.created':
+      handler = handlePullRequest.bind(null, projectId, {
+        action: 'opened',
+        pull_request: {
+          id: body.resource.pullRequestId,
+          created_at: body.resource.creationDate,
+          user: {
+            login: body.resource.createdBy.uniqueName
+          }
+        }
+      });
+      break;
+    case 'git.pullrequest.updated':
+      const message = body.message.text as string;
+      let votedIndex = -1;
+      votedIndex = message.indexOf('has approved');
+      if (votedIndex < 0) votedIndex = message.indexOf('approved');
+      if (votedIndex < 0) votedIndex = message.indexOf('is waiting for the author');
+      if (votedIndex < 0) votedIndex = message.indexOf('rejected');
+
+      if (votedIndex < 0) {
+        response.send(`Cannot parse message: ${message}`);
+        return;
+      }
+
+      const reviewerName = message.substring(0, votedIndex).trim();
+      const reviewerObject = body.resource.reviewers.find((reviewer: any) => reviewer.displayName === reviewerName);
+
+      handler = handlePullRequestReview.bind(null, projectId, {
+        action: 'submitted',
+        pull_request: {
+          id: body.resource.pullRequestId
+        },
+        review: {
+          id: body.resource.pullRequestId + '_' + reviewerObject.uniqueName,
+          user: {
+            login: reviewerObject.uniqueName
+          }
+        }
+      });
+      break;
+    case 'ms.vss-code.git-pullrequest-comment-event':
+      const comment = body.resource.comment; 
+      const threadLink = comment._links.threads.href as string;
+      const threadId = threadLink.substring(threadLink.lastIndexOf('/') + 1);
+
+      handler = handlePullRequestReviewComment.bind(null, projectId, {
+        action: 'created',
+        pull_request: {
+          id: body.resource.pullRequest.pullRequestId
+        },
+        comment: {
+          id: threadId + '_' + comment.id,
+          user: {
+            login: comment.author.uniqueName
+          }
+        }
+      });
+  }
+
+  if (!handler) {
+    response.send(`Did not found handler for ${event} event.`);
+    return;
+  }
+
+  functions.logger.info(request.body);
+  const result = await handler();
+
+  response.send(`Successfully handled ${event} event. Result: ${result}`);
+});
+
 export const githubHook = functions.https.onRequest(async (request, response) => {
   const projectId = request.query.projectId as string;
 
@@ -44,7 +128,7 @@ export const githubHook = functions.https.onRequest(async (request, response) =>
   response.send(`Successfully handled ${event} event. Result: ${result}`);
 });
 
-const handlePullRequest = async (projectId: string, body: any): Promise<string> => {
+const handlePullRequest = async (projectId: string, body: {action: string, pull_request: {id: string, created_at: string, user: {login: string}}}): Promise<string> => {
   if (body.action !== 'opened') {
     return `Skip ${body.action} action`;
   }
@@ -72,7 +156,7 @@ const handlePullRequest = async (projectId: string, body: any): Promise<string> 
   return `Create a new PR with id: ${pr.id}`;
 }
 
-const handlePullRequestReview = async (projectId: string, body: any): Promise<string> => {
+const handlePullRequestReview = async (projectId: string, body: {action:string, pull_request:{id:string}, review:{id:string, user:{login:string}}}): Promise<string> => {
   if (body.action !== 'submitted') {
     return `Skip ${body.action} action`;
   }
@@ -107,7 +191,7 @@ const handlePullRequestReview = async (projectId: string, body: any): Promise<st
   return `Create a new review with id ${review.id} in PR with id ${pr.id}`;
 }
 
-const handlePullRequestReviewComment = async (projectId: string, body: any): Promise<string> => {
+const handlePullRequestReviewComment = async (projectId: string, body: {action:string, pull_request:{id:string},comment:{id:string, user:{login:string}}}): Promise<string> => {
   if (body.action !== 'created') {
     return `Skip ${body.action} action`;
   }
@@ -154,7 +238,7 @@ const getCreator = async (projectId: string, userLogin: string): Promise<{status
   }
 
   const mappings = projectData.mappings;
-  const creatorEmail = mappings.find((mapping: any) => mapping.mappedName === userLogin)?.reviewerEmail;
+  const creatorEmail = mappings?.find((mapping: any) => mapping.mappedName === userLogin)?.reviewerEmail;
   const creator = creatorEmail ?? userLogin;
 
   return {
