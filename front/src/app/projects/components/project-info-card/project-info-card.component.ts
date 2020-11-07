@@ -26,6 +26,8 @@ export class ProjectInfoCardComponent implements OnInit {
   getLinkForHook(): string {
     if (this.project.host === 'Github') {
       return `https://us-central1-reviewer-cd0b3.cloudfunctions.net/githubHook?projectId=${this.project.id}`;
+    } else if (this.project.host === 'VSTS') {
+      return `https://us-central1-reviewer-cd0b3.cloudfunctions.net/vstsHook?projectId=${this.project.id}`;
     }
   }
 
