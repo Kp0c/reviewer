@@ -154,7 +154,7 @@ const getCreator = async (projectId: string, userLogin: string): Promise<{status
   }
 
   const mappings = projectData.mappings;
-  const creatorEmail = mappings.find((mapping: any) => mapping.githubName === userLogin)?.reviewerEmail;
+  const creatorEmail = mappings.find((mapping: any) => mapping.mappedName === userLogin)?.reviewerEmail;
   const creator = creatorEmail ?? userLogin;
 
   return {

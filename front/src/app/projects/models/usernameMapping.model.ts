@@ -1,4 +1,4 @@
 export interface UserNameMapping {
   reviewerEmail: string;
-  githubName: string;
+  mappedName: string;
 }

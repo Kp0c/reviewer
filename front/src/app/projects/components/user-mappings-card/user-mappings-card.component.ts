@@ -21,7 +21,7 @@ export class UserMappingsCardComponent implements OnInit {
 
   addNewMapping(): void {
     this.project.mappings.push({
-      githubName: '',
+      mappedName: '',
       reviewerEmail: ''
     });
   }
@@ -31,7 +31,7 @@ export class UserMappingsCardComponent implements OnInit {
   }
 
   async saveMapping(): Promise<void> {
-    if (this.project.mappings.some(mapping => !mapping.githubName || !mapping.reviewerEmail)) {
+    if (this.project.mappings.some(mapping => !mapping.mappedName || !mapping.reviewerEmail)) {
       this.snackBar.open('All fields in mapping must be populated!', 'OK', {
         duration: 2000
       });
