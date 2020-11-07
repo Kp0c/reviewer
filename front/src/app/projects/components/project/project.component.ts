@@ -1,16 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject, Subscription } from 'rxjs';
 import { first, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { Project } from '../../models/project.model';
 import { ProjectsService } from '../../services/projects.service';
-import { UserNameMapping } from '../../models/usernameMapping.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as moment from 'moment';
 import { PullRequest } from '../../models/pullRequest.model';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-project',
@@ -21,6 +16,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
   project: Project;
   pullRequests: PullRequest[];
   user: firebase.User;
+
+  selectedTabIndex = 0;
 
   private destroy$ = new ReplaySubject(1);
   private pullRequestsSubscription: Subscription;
@@ -37,6 +34,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
         first()
       ).subscribe(project => {
         this.project = project;
+
+        if (this.user?.uid !== project.owner) {
+          this.selectedTabIndex = 0;
+        }
 
         if (this.pullRequestsSubscription) {
           this.pullRequestsSubscription.unsubscribe();
