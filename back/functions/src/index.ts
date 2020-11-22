@@ -58,6 +58,7 @@ export const vstsHook = functions.https.onRequest(async (request, response) => {
         },
         review: {
           id: body.resource.pullRequestId + '_' + reviewerObject.uniqueName,
+          state: 'approved',
           user: {
             login: reviewerObject.uniqueName
           }
@@ -156,9 +157,13 @@ const handlePullRequest = async (projectId: string, body: {action: string, pull_
   return `Create a new PR with id: ${pr.id}`;
 }
 
-const handlePullRequestReview = async (projectId: string, body: {action:string, pull_request:{id:string}, review:{id:string, user:{login:string}}}): Promise<string> => {
+const handlePullRequestReview = async (projectId: string, body: {action:string, pull_request:{id:string}, review:{id:string, state: string, user:{login:string}}}): Promise<string> => {
   if (body.action !== 'submitted') {
     return `Skip ${body.action} action`;
+  }
+
+  if (!['approved', 'changes_requested'].some(reviewed_state => reviewed_state === body.review.state)) {
+    return `Skip ${body.review.state} state`;
   }
 
   const pr = body.pull_request;
