@@ -49,7 +49,7 @@ export class LeaderboardBuilder {
       });
     });
 
-    return leaderboard;
+    return leaderboard.sort((a, b) => b.points - a.points);
   }
 
   private calculatePoints(stat: BasicLeaderboardStat): number {
